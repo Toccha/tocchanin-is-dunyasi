@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="tr"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Toccha’nın İş Dünyası&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body { background-color: #f3f4f6; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.tab-active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; font-weight: bold; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { useState, useEffect } = React;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- SEED DATA ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const INITIAL_WORK_ITEMS = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '1', title: 'CLS Metriğinin İyileştirilmesi', jiraId: 'BRP-109862', jiraLink: 'https://jira.n11.com/browse/BRP-109862', groupName: 'Q2', project: 'Frontend', status: 'To-do', priority: 'High', order: 1 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '2', title: 'Görsellerde Width - Height Bilgilerine Yer Verilmesi', jiraId: 'BRP-109863', jiraLink: 'https://jira.n11.com/browse/BRP-109863', groupName: 'Q2', project: 'Frontend', status: 'To-do', priority: 'Medium', order: 2 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '3', title: 'Lazy Loading Uygulanabilecek Görseller', jiraId: 'BRP-109865', jiraLink: 'https://jira.n11.com/browse/BRP-109865', groupName: 'Q2', project: 'Frontend', status: 'To-do', priority: 'Medium', order: 3 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '4', title: 'Sayfa Tipine Göre Heading Tag Optimizasyonları', jiraId: 'BRP-114133', jiraLink: 'https://jira.n11.com/browse/BRP-114133', groupName: 'Q2', project: 'Frontend', status: 'To-do', priority: 'Medium', order: 4 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '5', title: 'Rendering\'i Etkileyen Dosyalarla İlgili Defer / Inline Aksiyonları', jiraId: 'BRP-109867', jiraLink: 'https://jira.n11.com/browse/BRP-109867', groupName: 'Q2', project: 'Frontend', status: 'To-do', priority: 'High', order: 5 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '6', title: 'Cache Lifetime Düzenlenmesi', jiraId: 'BRP-109866', jiraLink: 'https://jira.n11.com/browse/BRP-109866', groupName: 'Q2', project: 'Frontend', status: 'To-do', priority: 'High', order: 6 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '7', title: 'LCP Görseline fetchpriority="high" Eklenmesi', jiraId: 'BRP-109868', jiraLink: 'https://jira.n11.com/browse/BRP-109868', groupName: 'Q2', project: 'Frontend', status: 'To-do', priority: 'High', order: 7 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '8', title: '"Bugün Kargoda" - "Yarın Kargoda" badge gösterimi', jiraId: 'BRP-91634', jiraLink: 'https://jira.n11.com/browse/BRP-91634', groupName: 'Previous Quarter', project: 'Frontend', status: 'Done', priority: 'Low', order: 8 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '9', title: 'Taksit Badgelerinin Otomatize Edilmesi', jiraId: 'BRP-110122', jiraLink: 'https://jira.n11.com/browse/BRP-110122', groupName: 'Previous Quarter', project: 'Frontend', status: 'Done', priority: 'Medium', order: 9 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '10', title: 'Mweb Refactoring', jiraId: 'BRP-108333', jiraLink: 'https://jira.n11.com/browse/BRP-108333', groupName: 'Previous Quarter', project: 'Frontend', status: 'Done', priority: 'High', order: 10 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: '11', title: 'Sticky CTA on Review &amp; Info Page', jiraId: 'BRP-109657', jiraLink: 'https://jira.n11.com/browse/BRP-109657', groupName: 'Previous Quarter', project: 'Frontend', status: 'Done', priority: 'Medium', order: 11 },</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- MAIN APP COMPONENT ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function App() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// State: UI</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [role, setRole] = useState('owner'); // 'owner' or 'viewer'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [activeTab, setActiveTab] = useState('workItems');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// State: Data (with localStorage persistence)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [workItems, setWorkItems] = useState(() =&gt; JSON.parse(localStorage.getItem('t_workItems')) || INITIAL_WORK_ITEMS);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [notes, setNotes] = useState(() =&gt; JSON.parse(localStorage.getItem('t_notes')) || []);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [todos, setTodos] = useState(() =&gt; JSON.parse(localStorage.getItem('t_todos')) || []);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [contacts, setContacts] = useState(() =&gt; JSON.parse(localStorage.getItem('t_contacts')) || []);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Save to localStorage on change</p>
+<p class="p1"><span class="Apple-converted-space">            </span>useEffect(() =&gt; localStorage.setItem('t_workItems', JSON.stringify(workItems)), [workItems]);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>useEffect(() =&gt; localStorage.setItem('t_notes', JSON.stringify(notes)), [notes]);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>useEffect(() =&gt; localStorage.setItem('t_todos', JSON.stringify(todos)), [todos]);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>useEffect(() =&gt; localStorage.setItem('t_contacts', JSON.stringify(contacts)), [contacts]);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const isOwner = role === 'owner';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const todayStr = new Date().toISOString().split('T')[0];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Helper to add note (handles future date logic)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const handleAddNote = (workItemId, content, date, tag) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const newNote = { id: Date.now().toString(), workItemId, content, date, tag };</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setNotes([...notes, newNote]);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (date &gt; todayStr) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const newTodo = {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>id: (Date.now() + 1).toString(),</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>workItemId,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>title: 'İleri tarihli not',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>description: content,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>date: date,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>status: 'To-do',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>priority: 'Medium'</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>setTodos(prev =&gt; [...prev, newTodo]);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>alert('İleri tarihli not eklendi. Otomatik olarak bir To-do oluşturuldu.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Helpers for reordering</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const moveItem = (list, index, direction, setList) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if ((direction === -1 &amp;&amp; index === 0) || (direction === 1 &amp;&amp; index === list.length - 1)) return;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const newList = [...list];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const temp = newList[index];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>newList[index] = newList[index + direction];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>newList[index + direction] = temp;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setList(newList);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="min-h-screen flex flex-col font-sans text-gray-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* HEADER */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;header className="bg-white shadow px-6 py-4 flex justify-between items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h1 className="text-2xl font-bold text-gray-900"&gt;Toccha’nın İş Dünyası&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="flex items-center gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span className="text-sm text-gray-500"&gt;Rol Simülasyonu:&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;select<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>className="border border-gray-300 rounded p-1 text-sm bg-gray-50 focus:ring-blue-500"</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>value={role}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>onChange={(e) =&gt; setRole(e.target.value)}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;option value="owner"&gt;Owner View (Düzenleme Açık)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;option value="viewer"&gt;Viewer View (Sadece Okuma)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* NAVIGATION */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;nav className="bg-white border-b px-6 flex gap-6 text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{[</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{ id: 'workItems', label: 'İş Kalemleri' },</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{ id: 'notes', label: 'Notlar' },</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{ id: 'todos', label: 'To-do' },</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{ id: 'agenda', label: 'Haftalık Ajanda' },</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{ id: 'summary', label: 'Özet' },</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{ id: 'settings', label: 'Paylaşım &amp; Ayarlar' }</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>].map(tab =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>key={tab.id}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>className={`py-3 px-1 ${activeTab === tab.id ? 'tab-active' : 'text-gray-500 hover:text-gray-900'}`}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>onClick={() =&gt; setActiveTab(tab.id)}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>{tab.label}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/nav&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* MAIN CONTENT AREA */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;main className="flex-1 p-6 max-w-7xl mx-auto w-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{activeTab === 'workItems' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;WorkItemsTab isOwner={isOwner} workItems={workItems} setWorkItems={setWorkItems} notes={notes} todos={todos} handleAddNote={handleAddNote} moveItem={moveItem} todayStr={todayStr} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{activeTab === 'notes' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;NotesTab isOwner={isOwner} notes={notes} setNotes={setNotes} workItems={workItems} todayStr={todayStr} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{activeTab === 'todos' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;TodosTab isOwner={isOwner} todos={todos} setTodos={setTodos} workItems={workItems} todayStr={todayStr} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{activeTab === 'agenda' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;AgendaTab isOwner={isOwner} todos={todos} setTodos={setTodos} notes={notes} workItems={workItems} todayStr={todayStr} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{activeTab === 'summary' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;SummaryTab workItems={workItems} notes={notes} todos={todos} todayStr={todayStr} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{activeTab === 'settings' &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;SettingsTab isOwner={isOwner} contacts={contacts} setContacts={setContacts} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/main&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- SUBCOMPONENTS ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function WorkItemsTab({ isOwner, workItems, setWorkItems, notes, todos, handleAddNote, moveItem, todayStr }) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [selectedItem, setSelectedItem] = useState(null);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Grouping logic</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const groupedItems = workItems.reduce((acc, item) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>acc[item.groupName] = acc[item.groupName] || [];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>acc[item.groupName].push(item);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return acc;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, {});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="flex gap-6 h-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Left: List */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="w-2/3 flex flex-col gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{Object.entries(groupedItems).map(([groupName, items]) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div key={groupName} className={`p-4 rounded-lg border ${groupName === 'Q2' ? 'bg-blue-50 border-blue-200' : 'bg-gray-100 border-gray-300'}`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h2 className="text-lg font-bold mb-3"&gt;{groupName}&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="flex flex-col gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>{items.map((item, index) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>const itemNotes = notes.filter(n =&gt; n.workItemId === item.id &amp;&amp; n.date &lt;= todayStr).sort((a,b) =&gt; new Date(b.date) - new Date(a.date));</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>const latestNote = itemNotes.length &gt; 0 ? itemNotes[0].content : 'Not yok';</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>const openTodos = todos.filter(t =&gt; t.workItemId === item.id &amp;&amp; t.status !== 'Done').length;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;div key={item.id} className="bg-white p-4 rounded shadow-sm flex justify-between items-center cursor-pointer hover:shadow-md transition-shadow" onClick={() =&gt; setSelectedItem(item)}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;div className="flex-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;div className="flex items-center gap-2 mb-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;span className="font-semibold"&gt;{item.title}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;a href={item.jiraLink} target="_blank" className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded hover:bg-gray-300" onClick={e =&gt; e.stopPropagation()}&gt;{item.jiraId}&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;p className="text-sm text-gray-600 line-clamp-1"&gt;{latestNote}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;div className="text-xs text-gray-400 mt-2 flex gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;span&gt;Durum: {item.status}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;span&gt;Öncelik: {item.priority}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>{openTodos &gt; 0 &amp;&amp; &lt;span className="text-red-500 font-bold"&gt;{openTodos} Açık To-do&lt;/span&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>{isOwner &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;div className="flex flex-col gap-1 ml-4" onClick={e =&gt; e.stopPropagation()}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;button onClick={() =&gt; moveItem(workItems, workItems.findIndex(w =&gt; w.id === item.id), -1, setWorkItems)} className="text-gray-400 hover:text-black"&gt;▲&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;button onClick={() =&gt; moveItem(workItems, workItems.findIndex(w =&gt; w.id === item.id), 1, setWorkItems)} className="text-gray-400 hover:text-black"&gt;▼&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>);</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>})}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{/* Right: Detail &amp; Quick Note */}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="w-1/3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{selectedItem ? (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="bg-white p-6 rounded-lg shadow border sticky top-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h3 className="text-xl font-bold mb-2"&gt;{selectedItem.title}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;a href={selectedItem.jiraLink} target="_blank" className="text-blue-600 font-bold mb-4 block"&gt;{selectedItem.jiraId}&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p className="text-sm mb-2 text-gray-600"&gt;Grup: {selectedItem.groupName} | Proje: {selectedItem.project}&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                                </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>{isOwner &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div className="mt-6 border-t pt-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;h4 className="font-bold mb-3 text-sm"&gt;Hızlı Not Ekle&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;form onSubmit={(e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>e.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>handleAddNote(selectedItem.id, e.target.content.value, e.target.date.value || todayStr, e.target.tag.value);</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>e.target.reset();</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>e.target.date.value = todayStr;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>}} className="flex flex-col gap-3 text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;input type="date" name="date" defaultValue={todayStr} className="border p-2 rounded" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;textarea name="content" rows="3" placeholder="Notunuzu yazın..." className="border p-2 rounded" required&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;input type="text" name="tag" placeholder="Etiket (Opsiyonel)" className="border p-2 rounded" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;button type="submit" className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700"&gt;Not Ekle&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>) : (</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="bg-gray-50 p-6 rounded-lg border text-center text-gray-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>Detay görmek için sol taraftan bir iş kalemi seçin.</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function NotesTab({ isOwner, notes, setNotes, workItems, todayStr }) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 className="text-2xl font-bold mb-4"&gt;Tüm Notlar&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="flex flex-col gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{notes.sort((a,b) =&gt; new Date(b.date) - new Date(a.date)).map(note =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const wItem = workItems.find(w =&gt; w.id === note.workItemId);</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const isFuture = note.date &gt; todayStr;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div key={note.id} className={`p-4 rounded shadow-sm border ${isFuture ? 'bg-purple-50 border-purple-200' : 'bg-white'}`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div className="flex justify-between mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;span className="font-bold text-sm text-gray-700"&gt;{wItem ? wItem.title : 'Bilinmeyen İş'}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;span className={`text-xs font-bold px-2 py-1 rounded ${isFuture ? 'bg-purple-200 text-purple-800' : 'bg-gray-200 text-gray-800'}`}&gt;{note.date}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-gray-800"&gt;{note.content}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>{note.tag &amp;&amp; &lt;span className="text-xs text-blue-600 mt-2 block"&gt;#{note.tag}&lt;/span&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>{isOwner &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;button onClick={() =&gt; setNotes(notes.filter(n =&gt; n.id !== note.id))} className="text-red-500 text-xs mt-3"&gt;Sil&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>})}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{notes.length === 0 &amp;&amp; &lt;p className="text-gray-500"&gt;Henüz not eklenmemiş.&lt;/p&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function TodosTab({ isOwner, todos, setTodos, workItems, todayStr }) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const toggleTodo = (id) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if(!isOwner) return;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTodos(todos.map(t =&gt; t.id === id ? { ...t, status: t.status === 'Done' ? 'To-do' : 'Done' } : t));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 className="text-2xl font-bold mb-4"&gt;Görevler (To-do)&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="flex flex-col gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{todos.sort((a,b) =&gt; new Date(a.date) - new Date(b.date)).map(todo =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const wItem = workItems.find(w =&gt; w.id === todo.workItemId);</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const isDone = todo.status === 'Done';</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const isOverdue = !isDone &amp;&amp; todo.date &lt; todayStr;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const isToday = !isDone &amp;&amp; todo.date === todayStr;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>let bgClass = 'bg-white';</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>if (isDone) bgClass = 'bg-gray-100 opacity-60';</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>else if (isOverdue) bgClass = 'bg-red-50 border-red-300';</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>else if (isToday) bgClass = 'bg-yellow-50 border-yellow-300';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div key={todo.id} className={`p-4 rounded shadow-sm border flex items-start gap-4 ${bgClass}`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>type="checkbox"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>checked={isDone}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>onChange={() =&gt; toggleTodo(todo.id)}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>disabled={!isOwner}</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>className="mt-1 w-5 h-5 cursor-pointer"</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div className="flex-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;div className="flex justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;span className={`font-bold ${isDone ? 'line-through text-gray-500' : (isOverdue ? 'text-red-700' : 'text-gray-900')}`}&gt;{todo.title}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;span className="text-xs text-gray-500"&gt;{todo.date}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;p className="text-sm text-gray-600 mt-1"&gt;{todo.description}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;p className="text-xs text-blue-600 mt-2"&gt;{wItem ? wItem.title : ''}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>{isOwner &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;button onClick={() =&gt; setTodos(todos.filter(t =&gt; t.id !== todo.id))} className="text-red-500 text-xs"&gt;Sil&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>})}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{todos.length === 0 &amp;&amp; &lt;p className="text-gray-500"&gt;Görev bulunamadı.&lt;/p&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function AgendaTab({ todos, todayStr }) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Simplified Weekly View simulation grouping by date</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const groupedTodos = todos.reduce((acc, todo) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>acc[todo.date] = acc[todo.date] || [];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>acc[todo.date].push(todo);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return acc;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, {});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const sortedDates = Object.keys(groupedTodos).sort();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 className="text-2xl font-bold mb-6"&gt;Ajanda Görünümü&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="grid grid-cols-1 md:grid-cols-3 gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{sortedDates.map(date =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const isToday = date === todayStr;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div key={date} className={`p-4 rounded-lg border ${isToday ? 'bg-blue-50 border-blue-400' : 'bg-white shadow-sm'}`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 className={`font-bold border-b pb-2 mb-3 ${isToday ? 'text-blue-700' : 'text-gray-700'}`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>{date} {isToday &amp;&amp; '(Bugün)'}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div className="flex flex-col gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>{groupedTodos[date].map(todo =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;div key={todo.id} className={`text-sm p-2 rounded ${todo.status === 'Done' ? 'line-through text-gray-400' : (date &lt; todayStr ? 'bg-red-100 text-red-800' : 'bg-gray-100')}`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>{todo.title}</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>)</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>})}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{sortedDates.length === 0 &amp;&amp; &lt;p className="text-gray-500"&gt;Ajandada kayıtlı iş yok.&lt;/p&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function SummaryTab({ workItems, notes, todos, todayStr }) {</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const handleCopyRich = async () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let htmlStr = '';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let textStr = '';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>workItems.forEach(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const itemNotes = notes.filter(n =&gt; n.workItemId === item.id &amp;&amp; n.date &lt;= todayStr).sort((a,b) =&gt; new Date(b.date) - new Date(a.date));</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const latestNote = itemNotes.length &gt; 0 ? itemNotes[0].content : 'Not bulunamadı.';</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>htmlStr += `&lt;p&gt;&lt;b&gt;${item.title}&lt;/b&gt;-&lt;b&gt;&lt;a href="${item.jiraLink}"&gt;${item.jiraId}&lt;/a&gt;&lt;/b&gt;-${latestNote}&lt;/p&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>textStr += `${item.title}-${item.jiraId}-${latestNote}\n`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const blobHtml = new Blob([htmlStr], { type: 'text/html' });</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const blobText = new Blob([textStr], { type: 'text/plain' });</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const clipboardItem = new ClipboardItem({</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'text/html': blobHtml,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'text/plain': blobText</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>await navigator.clipboard.write([clipboardItem]);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>alert('Özet zengin metin (Rich Text) formatında kopyalandı! Mailinize veya dokümana yapıştırabilirsiniz.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} catch (err) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>await navigator.clipboard.writeText(textStr);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>alert('Tarayıcınız zengin metin desteklemiyor. Düz metin olarak kopyalandı.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="flex justify-between items-center mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h2 className="text-2xl font-bold"&gt;Durum Özeti&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button onClick={handleCopyRich} className="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700 font-bold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>Özeti Kopyala</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="flex flex-col gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{workItems.map(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const itemNotes = notes.filter(n =&gt; n.workItemId === item.id);</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const pastNotes = itemNotes.filter(n =&gt; n.date &lt;= todayStr).sort((a,b) =&gt; new Date(b.date) - new Date(a.date));</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const futureNotes = itemNotes.filter(n =&gt; n.date &gt; todayStr);</p>
+<p class="p2"><span class="Apple-converted-space">                            </span></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const latestNote = pastNotes.length &gt; 0 ? pastNotes[0].content : 'Henüz not girilmemiş.';</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const openTodos = todos.filter(t =&gt; t.workItemId === item.id &amp;&amp; t.status !== 'Done');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div key={item.id} className="bg-white p-5 rounded-lg shadow-sm border border-gray-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div className="flex gap-2 items-center mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;h3 className="font-bold text-lg"&gt;{item.title}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;a href={item.jiraLink} target="_blank" className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded font-bold hover:bg-blue-200"&gt;{item.jiraId}&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;span className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600"&gt;{item.groupName}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-gray-800 bg-gray-50 p-3 rounded mb-3 border-l-4 border-gray-400"&gt;{latestNote}&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>{futureNotes.length &gt; 0 &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;h4 className="text-xs font-bold text-purple-800 mb-1"&gt;İleri Tarihli Notlar / Planlar&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;ul className="list-disc pl-4 text-sm text-purple-900"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>{futureNotes.map(fn =&gt; &lt;li key={fn.id}&gt;[{fn.date}] {fn.content}&lt;/li&gt;)}</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>)}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>{openTodos.length &gt; 0 &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;div className="mt-2 text-sm text-red-600 font-semibold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>Bekleyen {openTodos.length} görev var.</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>})}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function SettingsTab({ isOwner, contacts, setContacts }) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="grid grid-cols-1 md:grid-cols-2 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h2 className="text-2xl font-bold mb-4"&gt;Paylaşım (Simülasyon)&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="bg-white p-6 rounded-lg shadow-sm border"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p className="text-sm text-gray-600 mb-4"&gt;Bu alan Supabase RLS politikaları ile yönetilecektir. Şu anki görünüm: &lt;strong className={isOwner ? 'text-blue-600' : 'text-gray-600'}&gt;{isOwner ? 'Owner' : 'Viewer'}&lt;/strong&gt;&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                            </span></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{isOwner ? (</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="email" placeholder="Kullanıcı e-posta adresi" className="border p-2 rounded w-full mb-2 text-sm" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;button className="bg-blue-600 text-white px-4 py-2 rounded text-sm w-full"&gt;Görüntüleme Yetkisi Ver&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>) : (</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p className="text-sm text-red-500 font-bold"&gt;Yetkiniz yok. Sadece görüntüleyebilirsiniz.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h2 className="text-2xl font-bold mb-4"&gt;Kişiler&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="bg-white p-6 rounded-lg shadow-sm border"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{isOwner &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;form onSubmit={(e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>e.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>setContacts([...contacts, { id: Date.now(), name: e.target.name.value, email: e.target.email.value }]);</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>e.target.reset();</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}} className="mb-6 flex gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="text" name="name" placeholder="İsim" className="border p-2 rounded flex-1 text-sm" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="email" name="email" placeholder="E-posta" className="border p-2 rounded flex-1 text-sm" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;button type="submit" className="bg-gray-800 text-white px-4 py-2 rounded text-sm"&gt;Ekle&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;ul className="flex flex-col gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>{contacts.map(c =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;li key={c.id} className="flex justify-between items-center text-sm border-b pb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;span className="font-bold block"&gt;{c.name}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;span className="text-gray-500"&gt;{c.email}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>{isOwner &amp;&amp; &lt;button onClick={() =&gt; setContacts(contacts.filter(con =&gt; con.id !== c.id))} className="text-red-500 text-xs"&gt;Sil&lt;/button&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>{contacts.length === 0 &amp;&amp; &lt;p className="text-sm text-gray-500"&gt;Kayıtlı kişi yok.&lt;/p&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>root.render(&lt;App /&gt;);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
