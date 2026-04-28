@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toccha’nın İş Dünyası</title>
+  <style>
+    :root{
+      --bg:#f1f5f9; --card:#ffffff; --text:#0f172a; --muted:#64748b; --border:#e2e8f0;
+      --primary:#0f172a; --blue:#2563eb; --red:#dc2626; --green:#16a34a;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);font-family:Inter,Arial,sans-serif;color:var(--text)}
+    .wrap{max-width:1280px;margin:auto;padding:24px}
+    .hero,.panel,.toolbar{background:var(--card);border:1px solid var(--border);border-radius:24px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+    .hero{padding:22px;margin-bottom:16px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+    h1{margin:0;font-size:28px}.sub{margin:6px 0 0;color:var(--muted)}
+    h2{margin:0 0 12px;font-size:18px} h3{margin:0 0 8px}
+    .tabs{display:flex;flex-wrap:wrap;gap:8px}.tab{border:0;border-radius:14px;padding:10px 14px;background:#e2e8f0;font-weight:700;cursor:pointer}.tab.active{background:var(--primary);color:white}
+    .toolbar{padding:14px;margin-bottom:16px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 1fr;gap:10px}
+    input,select,textarea{width:100%;border:1px solid var(--border);border-radius:14px;padding:10px 12px;font:inherit;background:white}
+    textarea{min-height:90px;resize:vertical}
+    button{font:inherit}.btn{border:0;border-radius:14px;padding:10px 14px;font-weight:700;cursor:pointer;background:#e2e8f0}.btn.primary{background:var(--primary);color:white}.btn.red{background:#fee2e2;color:#991b1b}.btn.green{background:#dcfce7;color:#166534}.btn.blue{background:#dbeafe;color:#1d4ed8}.btn.small{padding:6px 8px;border-radius:10px;font-size:12px}
+    .actions{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;align-items:center}
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .panel{padding:16px}.groups{display:grid;gap:16px}.group-title{font-size:18px;font-weight:800;margin:0 0 10px;display:flex;gap:8px;align-items:center}.dot{width:12px;height:12px;border-radius:50%}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .card{background:white;border:1px solid var(--border);border-left:8px solid #64748b;border-radius:20px;padding:14px;cursor:pointer}.card.selected{outline:3px solid #0f172a}
+    .card h3{margin:0 0 6px;font-size:16px}.meta{color:var(--muted);font-size:13px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.chip{border-radius:999px;padding:4px 8px;font-size:12px;font-weight:700;background:#f1f5f9}
+    .high{background:#fee2e2;color:#991b1b}.medium{background:#fef3c7;color:#92400e}.low{background:#f1f5f9;color:#334155}.bluechip{background:#dbeafe;color:#1d4ed8}
+    .link{color:#1d4ed8;text-decoration:none;font-weight:800}.section{display:none}.section.active{display:block}
+    .todo{border:1px solid var(--border);border-left:7px solid #64748b;border-radius:18px;padding:12px;background:white;margin-bottom:10px}.todo.overdue{border-color:#fca5a5;border-left-color:var(--red);background:#fef2f2}.todo.done{opacity:.55;background:#f8fafc}
+    .note{border:1px solid var(--border);border-left:7px solid #64748b;border-radius:18px;padding:12px;background:white;margin-bottom:10px}.note.future{background:#f5f3ff;border-color:#c4b5fd}.future-box{background:#f5f3ff;border:1px solid #c4b5fd;border-radius:14px;padding:10px;margin-top:10px}
+    .week{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}.day{background:#f8fafc;border:1px solid var(--border);border-radius:18px;padding:10px;min-height:220px}.day.today{background:#eff6ff;border-color:#93c5fd}.day-title{font-weight:800;margin-bottom:10px}
+    .summary-item{border:1px solid var(--border);border-left:8px solid #64748b;border-radius:20px;padding:14px;margin-bottom:12px;background:white}
+    .row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.muted{color:var(--muted)}.hidden{display:none}.mt{margin-top:10px}
+    .copybox{width:100%;min-height:220px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;white-space:pre-wrap;background:#f8fafc}.richSummary{background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:12px;min-height:220px;white-space:pre-wrap;line-height:1.55}.richSummary div{margin-bottom:8px}
+    dialog{border:0;border-radius:24px;max-width:720px;width:calc(100% - 32px);box-shadow:0 20px 80px rgba(15,23,42,.25)}
+    dialog::backdrop{background:rgba(15,23,42,.35)}
+    .modal-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
+    @media(max-width:900px){.hero{display:block}.toolbar,.grid,.cards,.week{grid-template-columns:1fr}.tabs{margin-top:12px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <h1>Toccha’nın İş Dünyası</h1>
+      <p class="sub">Jira işleri, günlük notlar, yapılacaklar, haftalık ajanda ve özet görünümü.</p>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="items">İşler</button>
+      <button class="tab" data-tab="notes">Notlar</button>
+      <button class="tab" data-tab="todos">Yapılacaklar</button>
+      <button class="tab" data-tab="agenda">Ajanda</button>
+      <button class="tab" data-tab="summary">Özet</button>
+    </nav>
+  </header>
+
+  <div class="toolbar">
+    <input id="search" placeholder="Ara: iş, Jira ID, proje, not..." />
+    <select id="typeFilter"><option>All</option><option>Jira item</option><option>General topic</option></select>
+    <select id="projectFilter"><option>All</option></select>
+    <select id="priorityFilter"><option>All</option><option>High</option><option>Medium</option><option>Low</option></select>
+    <select id="dateModeFilter"><option value="all">Tüm Tarihler</option><option value="day">Gün Seç</option><option value="week">Hafta Seç</option></select>
+    <input id="dateFilter" type="date" />
+    <div class="grid2">
+      <button class="btn blue" id="unfinishedBtn">Yapılmayan</button>
+      <button class="btn red" id="overdueBtn">Geciken</button>
+    </div>
+  </div>
+
+  <section id="items" class="section active">
+    <div class="grid">
+      <div id="itemGroups" class="groups"></div>
+      <aside>
+        <div class="panel">
+          <h2>Yeni İş / Konu Ekle</h2>
+          <input id="newTitle" placeholder="Başlık" />
+          <div class="grid2 mt">
+            <select id="newType"><option>Jira item</option><option>General topic</option></select>
+            <input id="newJiraId" placeholder="Jira ID" />
+          </div>
+          <div class="grid2 mt">
+            <input id="newProject" placeholder="Proje" />
+            <input id="newGroup" placeholder="Grup" value="General" />
+          </div>
+          <textarea id="newDesc" class="mt" placeholder="Açıklama"></textarea>
+          <div class="grid3 mt">
+            <input id="newStatus" value="Open" />
+            <select id="newPriority"><option>High</option><option selected>Medium</option><option>Low</option></select>
+            <input id="newColor" type="color" value="#2563eb" />
+          </div>
+          <button class="btn primary mt" style="width:100%" onclick="addItem()">Ekle</button>
+        </div>
+        <div class="panel mt" id="detailPanel"></div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="notes" class="section">
+    <div class="grid">
+      <div>
+        <div class="panel" style="margin-bottom:12px">
+          <h2>Girili Günlük Notlar</h2>
+          <p class="muted">Notları buradan düzenleyebilir, silebilir ve sıralayabilirsin.</p>
+        </div>
+        <div id="notesList"></div>
+      </div>
+      <aside>
+        <div class="panel">
+          <h2>Yeni Günlük Not Ekle</h2>
+          <select id="noteItem"></select>
+          <input id="noteDate" class="mt" type="date" />
+          <textarea id="noteContent" class="mt" placeholder="Günlük not"></textarea>
+          <input id="noteTag" class="mt" value="daily" placeholder="Etiket" />
+          <button class="btn primary mt" style="width:100%" onclick="addNote()">Not Ekle</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="todos" class="section">
+    <div class="grid">
+      <div>
+        <div class="panel" style="margin-bottom:12px">
+          <h2>Girili Yapılacaklar</h2>
+          <p class="muted">Yapılacakları buradan düzenleyebilir, silebilir ve sıralayabilirsin.</p>
+        </div>
+        <div id="todosList"></div>
+      </div>
+      <aside>
+        <div class="panel">
+          <h2>Yeni Yapılacak / Hatırlatma Ekle</h2>
+          <select id="todoItem"></select>
+          <input id="todoTitle" class="mt" placeholder="Başlık" />
+          <textarea id="todoDesc" class="mt" placeholder="Açıklama"></textarea>
+          <div class="grid2 mt">
+            <input id="todoDate" type="date" />
+            <select id="todoPriority"><option>High</option><option selected>Medium</option><option>Low</option></select>
+          </div>
+          <button class="btn primary mt" style="width:100%" onclick="addTodo()">Yapılacak Ekle</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="agenda" class="section">
+    <div class="panel">
+      <div class="row">
+        <h2>Haftalık Ajanda</h2>
+        <div>
+          <button class="btn" onclick="moveWeek(-7)">Önceki</button>
+          <button class="btn" onclick="goToday()">Bugün</button>
+          <button class="btn" onclick="moveWeek(7)">Sonraki</button>
+        </div>
+      </div>
+      <div id="weekView" class="week mt"></div>
+    </div>
+  </section>
+
+  <section id="summary" class="section">
+    <div class="panel">
+      <div class="row">
+        <h2>Özet Görünümü</h2>
+        <div>
+          <button class="btn blue" onclick="copyPlainSummary()">Özeti Kopyala</button>
+          <button class="btn" onclick="exportJson()">JSON Export</button>
+          <label class="btn">JSON Import <input class="hidden" type="file" accept="application/json" onchange="importJson(event)" /></label>
+        </div>
+      </div>
+      <div class="mt">
+        <h3>Kopyalanabilir Özet Dökümü</h3>
+        <p class="muted">Format: <b>İş Adı</b>-<b>Jira ID</b>-Son güncel not. Aşağıdaki önizlemede iş adı kalın, Jira ID ise kalın ve linkli gösterilir.</p>
+        <div id="richSummary" class="richSummary"></div>
+        <textarea id="plainSummary" class="copybox hidden" readonly></textarea>
+      </div>
+      <div class="mt">
+        <h3>Genel Kartlı Görünüm</h3>
+        <div id="summaryList" class="mt"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<dialog id="editDialog">
+  <div class="modal-head">
+    <h2 id="editTitle">Düzenle</h2>
+    <button class="btn" onclick="closeEdit()">Kapat</button>
+  </div>
+  <form id="editForm" method="dialog"></form>
+</dialog>
+
+<script>
+const KEY = "daily-jira-agenda-site-v6";
+const LEGACY_KEYS = ["daily-jira-agenda-site-v1"];
+const today = () => new Date().toISOString().slice(0,10);
+const addDays = n => { const d = new Date(); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); };
+const uid = p => p + "-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+const initial = {
+  jiraBaseUrl:"https://jira.n11.com/browse/",
+  groupOrders: { "Q2": 1, "Previous Quarter": 2, "General": 3 },
+  items:[
+    ["Q2","BRP-109862","CLS Metriğinin İyileştirilmesi"],["Q2","BRP-109863","Görsellerde Width - Height Bilgilerine Yer Verilmesi"],["Q2","BRP-109865","Lazy Loading Uygulanabilecek Görseller"],["Q2","BRP-114133","Sayfa Tipine Göre Heading Tag Optimizasyonları"],["Q2","BRP-109867","Rendering'i Etkileyen Dosyalarla İlgili Defer / Inline Aksiyonları"],["Q2","BRP-109866","Cache Lifetime Düzenlenmesi"],["Q2","BRP-109868","LCP Görseline fetchpriority=\\\"high\\\" Eklenmesi"],["Previous Quarter","BRP-91634","\\\"Bugün Kargoda\\\" - \\\"Yarın Kargoda\\\" badge gösterimi"],["Previous Quarter","BRP-110122","Taksit Badgelerinin Otomatize Edilmesi"],["Previous Quarter","BRP-108333","Mweb Refactoring"],["Previous Quarter","BRP-109657","Sticky CTA on Review & Info Page"]
+  ].map((x,i)=>({id:"item-"+(i+1),order:i+1,group:x[0],type:"Jira item",jiraId:x[1],jiraLink:"https://jira.n11.com/browse/"+x[1],title:x[2],project:x[0]==="Q2"?"Q2 SEO":"Previous Quarter",description:"",status:i<2?"In Progress":"Open",priority:i%3===0?"High":"Medium",color:x[0]==="Q2"?"#7c3aed":"#0f766e"})),
+  notes:[],
+  todos:[]
+};
+initial.notes=[{id:"note-1",order:1,itemId:"item-1",date:today(),content:"CLS iyileştirme başlıkları takip ediliyor.",tag:"daily"}];
+initial.todos=[
+  {id:"todo-1",order:1,itemId:"item-6",title:"Insider cache lifetime dönüşünü takip et",description:"3rd party asset cache süresi için uygulanabilirlik sorulacak.",date:addDays(1),status:"To-do",priority:"High"},
+  {id:"todo-2",order:2,itemId:"item-1",title:"CLS aksiyon listesini güncelle",description:"Logo alanı, image width-height ve layout shift noktaları kontrol edilecek.",date:today(),status:"To-do",priority:"Medium"},
+  {id:"todo-3",order:3,itemId:"item-9",title:"Taksit badge kapsam notlarını toparla",description:"Önceki çeyrekten kalan takip maddeleri özetlenecek.",date:addDays(-1),status:"To-do",priority:"Medium"}
+];
+
+function loadState(){
+  const raw = localStorage.getItem(KEY) || LEGACY_KEYS.map(k=>localStorage.getItem(k)).find(Boolean);
+  try { return raw ? JSON.parse(raw) : initial; } catch { return initial; }
+}
+let state = loadState();
+normalizeState();
+let selectedItemId = state.items[0]?.id;
+let weekAnchor = today();
+let filters = { search:"", type:"All", project:"All", priority:"All", dateMode:"all", date:today(), unfinished:false, overdue:false };
+
+function normalizeState(){
+  state.items = (state.items || []).map((x, idx) => ({ order: idx + 1, ...x, order: x.order ?? idx + 1 }));
+  state.notes = (state.notes || []).map((x, idx) => ({ order: idx + 1, ...x, order: x.order ?? idx + 1 }));
+  state.todos = (state.todos || []).map((x, idx) => ({ order: idx + 1, ...x, order: x.order ?? idx + 1 }));
+  state.groupOrders = state.groupOrders || {};
+  const groups = [...new Set(state.items.map(i => i.group || "General"))];
+  groups.forEach((group, index) => {
+    if(state.groupOrders[group] == null) state.groupOrders[group] = Object.keys(state.groupOrders).length + index + 1;
+  });
+}
+function save(){ normalizeState(); localStorage.setItem(KEY, JSON.stringify(state)); render(); }
+function ordered(arr){ return arr.slice().sort((a,b)=>(a.order??0)-(b.order??0)); }
+function itemById(id){ return state.items.find(i=>i.id===id); }
+function overdue(t){ return t.status !== "Done" && t.date < today(); }
+function prClass(p){ return p==="High"?"high":p==="Medium"?"medium":"low"; }
+function fmt(d){ return new Date(d+"T12:00:00").toLocaleDateString("tr-TR",{weekday:"short",day:"2-digit",month:"short"}); }
+function jiraLink(id){ return state.jiraBaseUrl + id; }
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active")); b.classList.add("active");
+  document.querySelectorAll(".section").forEach(x=>x.classList.remove("active")); document.getElementById(b.dataset.tab).classList.add("active");
+  render();
+});
+["search","typeFilter","projectFilter","priorityFilter"].forEach(id=>document.getElementById(id).oninput = e => { const k = id.replace("Filter",""); filters[k==="search"?"search":k] = e.target.value; render(); });
+document.getElementById("dateModeFilter").oninput = e => { filters.dateMode = e.target.value; render(); };
+document.getElementById("dateFilter").oninput = e => { filters.date = e.target.value || today(); render(); };
+document.getElementById("unfinishedBtn").onclick=()=>{filters.unfinished=!filters.unfinished; render();}
+document.getElementById("overdueBtn").onclick=()=>{filters.overdue=!filters.overdue; render();}
+
+function filteredItems(){
+  return ordered(state.items).filter(i=>{
+    const txt=(i.title+" "+i.jiraId+" "+i.project+" "+i.group+" "+i.description).toLowerCase();
+    if(filters.search && !txt.includes(filters.search.toLowerCase())) return false;
+    if(filters.type!=="All" && i.type!==filters.type) return false;
+    if(filters.project!=="All" && i.project!==filters.project) return false;
+    if(filters.priority!=="All" && i.priority!==filters.priority) return false;
+    return true;
+  });
+}
+function filteredTodos(){
+  return ordered(state.todos).filter(t=>{
+    const i=itemById(t.itemId); const txt=(t.title+" "+t.description+" "+(i?.title||"")).toLowerCase();
+    if(filters.search && !txt.includes(filters.search.toLowerCase())) return false;
+    if(filters.unfinished && t.status==="Done") return false;
+    if(filters.overdue && !overdue(t)) return false;
+    if(filters.priority!=="All" && t.priority!==filters.priority) return false;
+    if(filters.type!=="All" && i?.type!==filters.type) return false;
+    if(filters.project!=="All" && i?.project!==filters.project) return false;
+    return true;
+  });
+}
+function isFutureDate(dateStr){ return dateStr > today(); }
+function dateInSelectedRange(dateStr){
+  if(filters.dateMode === "all") return true;
+  const selected = filters.date || today();
+  if(filters.dateMode === "day") return dateStr === selected;
+  if(filters.dateMode === "week"){
+    const start = startOfWeek(selected).toISOString().slice(0,10);
+    const endDate = new Date(start + "T12:00:00");
+    endDate.setDate(endDate.getDate() + 6);
+    const end = endDate.toISOString().slice(0,10);
+    return dateStr >= start && dateStr <= end;
+  }
+  return true;
+}
+function notesForDateFilter(){
+  return ordered(state.notes).filter(n => !isFutureDate(n.date) && dateInSelectedRange(n.date));
+}
+function latestNote(itemId){
+  return notesForDateFilter()
+    .filter(n=>n.itemId===itemId)
+    // Newer date first. If the date is the same, lower order means it was entered more recently.
+    .sort((a,b)=>b.date.localeCompare(a.date) || (a.order??0)-(b.order??0))[0];
+}
+function futureNotes(itemId){
+  return ordered(state.notes).filter(n => n.itemId === itemId && isFutureDate(n.date));
+}
+
+function render(){
+  fillSelects(); renderItems(); renderDetail(); renderNotes(); renderTodos(); renderAgenda(); renderSummary();
+  document.getElementById("unfinishedBtn").style.outline = filters.unfinished ? "3px solid #2563eb" : "";
+  document.getElementById("overdueBtn").style.outline = filters.overdue ? "3px solid #dc2626" : "";
+}
+function fillSelects(){
+  const projects=[...new Set(state.items.map(i=>i.project).filter(Boolean))];
+  const pf=document.getElementById("projectFilter"); const old=pf.value;
+  pf.innerHTML='<option>All</option>'+projects.map(p=>`<option>${escapeHtml(p)}</option>`).join(""); pf.value=projects.includes(old)?old:"All";
+  ["noteItem","todoItem"].forEach(id=>{ const el=document.getElementById(id); const oldv=el.value || selectedItemId; el.innerHTML=ordered(state.items).map(i=>`<option value="${i.id}">${escapeHtml(i.title)}</option>`).join(""); el.value=state.items.find(i=>i.id===oldv)?.id || selectedItemId || ""; });
+  document.getElementById("noteDate").value ||= today(); document.getElementById("todoDate").value ||= today(); document.getElementById("dateFilter").value ||= filters.date || today();
+}
+function renderItems(){
+  const byGroup={}; 
+  filteredItems().forEach(i=>(byGroup[i.group || "General"]??=[]).push(i));
+
+  const orderedGroups = Object.entries(byGroup).sort(([groupA],[groupB]) => {
+    return (state.groupOrders?.[groupA] ?? 9999) - (state.groupOrders?.[groupB] ?? 9999);
+  });
+
+  document.getElementById("itemGroups").innerHTML = orderedGroups.map(([g,items])=>`
+    <div class="panel">
+      <div class="row" style="margin-bottom:10px">
+        <p class="group-title" style="margin:0"><span class="dot" style="background:${items[0].color}"></span>${escapeHtml(g)}</p>
+        <div class="actions">
+          <button class="btn small" onclick="moveGroup('${escapeAttr(g)}',-1)">↑ Grup</button>
+          <button class="btn small" onclick="moveGroup('${escapeAttr(g)}',1)">↓ Grup</button>
+        </div>
+      </div>
+      <div class="cards">
+      ${items.map(i=>{ const n=latestNote(i.id); const open=state.todos.filter(t=>t.itemId===i.id&&t.status!=="Done").length; return `
+        <div class="card ${selectedItemId===i.id?'selected':''}" style="border-left-color:${i.color}" onclick="selectItem('${i.id}')">
+          <div class="row">
+            <div><h3>${escapeHtml(i.title)}</h3><div class="meta">${escapeHtml(i.project||"")} · ${escapeHtml(i.status||"")}</div></div>
+            <div class="actions">
+              <button class="btn small" onclick="event.stopPropagation();moveRecord('items','${i.id}',-1)">↑</button>
+              <button class="btn small" onclick="event.stopPropagation();moveRecord('items','${i.id}',1)">↓</button>
+              <button class="btn small blue" onclick="event.stopPropagation();openEdit('item','${i.id}')">Düzenle</button>
+              <button class="btn small red" onclick="event.stopPropagation();deleteItem('${i.id}')">Sil</button>
+            </div>
+          </div>
+          <div class="chips"><span class="chip ${prClass(i.priority)}">${escapeHtml(i.priority)}</span><span class="chip">${escapeHtml(i.type)}</span>${i.jiraId?`<a class="chip link" onclick="event.stopPropagation()" target="_blank" href="${i.jiraLink}">${escapeHtml(i.jiraId)}</a>`:""}</div>
+          ${n?`<p class="meta"><b>${n.date}:</b> ${escapeHtml(n.content).slice(0,220)}</p>`:""}
+          ${open?`<p class="meta">${open} açık yapılacak</p>`:""}
+        </div>`}).join("")}
+    </div></div>`).join("") || '<div class="panel">Kayıt bulunamadı.</div>';
+}
+
+function moveGroup(groupName, direction){
+  const groups = [...new Set(state.items.map(i => i.group || "General"))]
+    .sort((a,b)=>(state.groupOrders?.[a] ?? 9999) - (state.groupOrders?.[b] ?? 9999));
+
+  const idx = groups.indexOf(groupName);
+  const target = idx + direction;
+  if(idx < 0 || target < 0 || target >= groups.length) return;
+
+  const a = groups[idx];
+  const b = groups[target];
+  const temp = state.groupOrders[a];
+  state.groupOrders[a] = state.groupOrders[b];
+  state.groupOrders[b] = temp;
+  save();
+}
+
+function renderDetail(){
+  const i=itemById(selectedItemId); if(!i){document.getElementById("detailPanel").innerHTML="<h2>Detay</h2><p class='muted'>İş seçilmedi.</p>";return;}
+  const todos=ordered(state.todos).filter(t=>t.itemId===i.id);
+  const notes=ordered(state.notes).filter(n=>n.itemId===i.id);
+  document.getElementById("detailPanel").innerHTML=`<h2>Seçili İş Detayı</h2>
+    <div style="background:${i.color}22;border-radius:16px;padding:12px"><b>${escapeHtml(i.title)}</b><p class="meta">${escapeHtml(i.group||"")} · ${escapeHtml(i.project||"")}</p>${i.jiraId?`<a class="link" target="_blank" href="${i.jiraLink}">${escapeHtml(i.jiraId)}</a>`:""}</div>
+    <div class="actions mt"><button class="btn small blue" onclick="openEdit('item','${i.id}')">İşi Düzenle</button><button class="btn small red" onclick="deleteItem('${i.id}')">İşi Sil</button></div>
+
+    <div class="future-box">
+      <h3>Bu işe hızlı not ekle</h3>
+      <p class="muted">Tarih seçilmezse bugünün tarihi atanır. İleri tarih seçersen not ayrıca yapılacaklara da eklenir.</p>
+      <input id="detailNoteDate" type="date" value="${today()}">
+      <textarea id="detailNoteContent" class="mt" placeholder="Not içeriği"></textarea>
+      <input id="detailNoteTag" class="mt" value="daily" placeholder="Etiket">
+      <button class="btn primary mt" style="width:100%" onclick="addDetailNote('${i.id}')">Not Ekle</button>
+    </div>
+
+    <h3 class="mt">Bağlı yapılacaklar</h3>${todos.map(todoHtml).join("") || "<p class='muted'>Yok.</p>"}
+    <h3 class="mt">Günlük notlar</h3>${notes.map(noteHtml).join("") || "<p class='muted'>Yok.</p>"}`;
+}
+function renderNotes(){
+  const notes = filters.dateMode === "all" ? ordered(state.notes) : ordered(state.notes).filter(n => !isFutureDate(n.date) && dateInSelectedRange(n.date));
+  document.getElementById("notesList").innerHTML = notes.map(noteHtml).join("") || '<div class="panel">Seçili tarih filtresine uygun not yok.</div>';
+}
+function renderTodos(){ document.getElementById("todosList").innerHTML = filteredTodos().map(todoHtml).join("") || '<div class="panel">Yapılacak bulunamadı.</div>'; }
+function renderAgenda(){
+  const start=startOfWeek(weekAnchor); const days=[...Array(7)].map((_,idx)=>{const d=new Date(start);d.setDate(start.getDate()+idx);return d.toISOString().slice(0,10)});
+  document.getElementById("weekView").innerHTML=days.map(d=>`<div class="day ${d===today()?'today':''}"><div class="day-title">${fmt(d)}</div>${filteredTodos().filter(t=>t.date===d).map(todoHtml).join("")}</div>`).join("");
+}
+function plainSummaryText(){
+  return filteredItems().map(i => {
+    const n = latestNote(i.id);
+    const latest = n ? String(n.content || "").trim() : "Henüz not yok.";
+    return `${i.title}-${i.jiraId || ""}-${latest}`;
+  }).join("\n");
+}
+function richSummaryHtml(){
+  return filteredItems().map(i => {
+    const n = latestNote(i.id);
+    const latest = n ? String(n.content || "").trim() : "Henüz not yok.";
+    const jiraPart = i.jiraId
+      ? `<a class="link" target="_blank" href="${escapeAttr(i.jiraLink || jiraLink(i.jiraId))}"><b>${escapeHtml(i.jiraId)}</b></a>`
+      : "";
+    return `<div><b>${escapeHtml(i.title)}</b>-${jiraPart}-${escapeHtml(latest).replace(/\n/g,"<br>")}</div>`;
+  }).join("");
+}
+function richSummaryClipboardHtml(){
+  return filteredItems().map(i => {
+    const n = latestNote(i.id);
+    const latest = n ? String(n.content || "").trim() : "Henüz not yok.";
+    const jiraPart = i.jiraId
+      ? `<a href="${escapeAttr(i.jiraLink || jiraLink(i.jiraId))}"><strong>${escapeHtml(i.jiraId)}</strong></a>`
+      : "";
+    return `<p><strong>${escapeHtml(i.title)}</strong>-${jiraPart}-${escapeHtml(latest).replace(/\n/g,"<br>")}</p>`;
+  }).join("");
+}
+function renderSummary(){
+  const plain = document.getElementById("plainSummary");
+  if(plain) plain.value = plainSummaryText();
+  const rich = document.getElementById("richSummary");
+  if(rich) rich.innerHTML = richSummaryHtml();
+  document.getElementById("summaryList").innerHTML=filteredItems().map(i=>{
+    const n=latestNote(i.id); const open=ordered(state.todos).filter(t=>t.itemId===i.id&&t.status!=="Done");
+    return `<div class="summary-item" style="border-left-color:${i.color}">
+      <div class="row">
+        <div><h3>${escapeHtml(i.title)}</h3><div class="meta">${escapeHtml(i.group||"")} · ${escapeHtml(i.project||"")} · ${escapeHtml(i.priority||"")}</div>${i.jiraId?`<a class="link" target="_blank" href="${i.jiraLink}">${escapeHtml(i.jiraId)}</a>`:""}</div>
+        <div class="actions"><button class="btn small" onclick="moveRecord('items','${i.id}',-1)">↑</button><button class="btn small" onclick="moveRecord('items','${i.id}',1)">↓</button><button class="btn small blue" onclick="openEdit('item','${i.id}')">Düzenle</button><button class="btn small red" onclick="deleteItem('${i.id}')">Sil</button></div>
+      </div>
+      <div class="mt" style="background:#f8fafc;border-radius:14px;padding:10px"><b>Son not:</b> ${n?`${n.date}: ${escapeHtml(n.content).replace(/\n/g,"<br>")}`:"Seçili tarih filtresine uygun geçmiş/güncel not yok."}</div>
+      ${futureNotes(i.id).length?`<div class="future-box"><b>İleri tarihli notlar</b>${futureNotes(i.id).map(fn=>`<div class="mt"><b>${fn.date}</b>: ${escapeHtml(fn.content).replace(/\n/g,"<br>")}</div>`).join("")}</div>`:""}
+      ${open.length?`<h4>Açık yapılacaklar</h4>${open.map(todoHtml).join("")}`:""}
+    </div>`;
+  }).join("");
+}
+function todoHtml(t){ const i=itemById(t.itemId); return `<div class="todo ${overdue(t)?'overdue':''} ${t.status==='Done'?'done':''}" style="border-left-color:${overdue(t)?'#dc2626':(i?.color||'#64748b')}">
+  <div class="row">
+    <div><h3>${escapeHtml(t.title)}</h3><div class="meta">${escapeHtml(t.description||"")}</div><div class="meta">${t.date} · ${escapeHtml(i?.title||"")}</div></div>
+    <div class="actions"><button class="btn small" onclick="moveRecord('todos','${t.id}',-1)">↑</button><button class="btn small" onclick="moveRecord('todos','${t.id}',1)">↓</button><button class="btn small blue" onclick="openEdit('todo','${t.id}')">Düzenle</button><button class="btn small red" onclick="deleteTodo('${t.id}')">Sil</button><button class="btn small green" onclick="toggleTodo('${t.id}')">${t.status==='Done'?'Geri Al':'Yapıldı'}</button></div>
+  </div>
+  <div class="chips"><span class="chip ${prClass(t.priority)}">${escapeHtml(t.priority)}</span>${overdue(t)?'<span class="chip high">Gecikti</span>':''}${t.date===today()&&t.status!=="Done"?'<span class="chip bluechip">Bugün</span>':''}</div>
+</div>`; }
+function noteHtml(n){ const i=itemById(n.itemId); const future=isFutureDate(n.date); return `<div class="note ${future?'future':''}" style="border-left-color:${future?'#7c3aed':(i?.color||'#64748b')}">
+  <div class="row">
+    <div><b>${escapeHtml(i?.title||"Silinen iş")}</b><div class="meta">${n.date}</div></div>
+    <div class="actions"><button class="btn small" onclick="moveRecord('notes','${n.id}',-1)">↑</button><button class="btn small" onclick="moveRecord('notes','${n.id}',1)">↓</button><button class="btn small blue" onclick="openEdit('note','${n.id}')">Düzenle</button><button class="btn small red" onclick="deleteNote('${n.id}')">Sil</button></div>
+  </div>
+  <div class="chips"><span class="chip">${escapeHtml(n.tag||"")}</span>${future?'<span class="chip bluechip">İleri tarihli not</span>':''}</div>
+  <p>${escapeHtml(n.content).replace(/\n/g,"<br>")}</p>
+</div>`; }
+
+function selectItem(id){ selectedItemId=id; document.getElementById("noteItem").value=id; document.getElementById("todoItem").value=id; render(); }
+function addItem(){
+  const title=document.getElementById("newTitle").value.trim(); if(!title) return alert("Başlık gerekli.");
+  const jiraId=document.getElementById("newJiraId").value.trim();
+  state.items.unshift({id:uid("item"),order:0,title,type:document.getElementById("newType").value,jiraId,jiraLink:jiraId?jiraLink(jiraId):"",project:document.getElementById("newProject").value,group:document.getElementById("newGroup").value||"General",description:document.getElementById("newDesc").value,status:document.getElementById("newStatus").value,priority:document.getElementById("newPriority").value,color:document.getElementById("newColor").value});
+  state.items.forEach((x,idx)=>x.order=idx+1);
+  document.getElementById("newTitle").value=""; document.getElementById("newJiraId").value=""; save();
+}
+function addNote(){
+  const itemId=document.getElementById("noteItem").value, content=document.getElementById("noteContent").value.trim(); if(!content) return alert("Not gerekli.");
+  const date = document.getElementById("noteDate").value || today();
+  const tag = document.getElementById("noteTag").value || "daily";
+  createNoteAndMaybeTodo(itemId, date, content, tag);
+  document.getElementById("noteContent").value=""; save();
+}
+function addDetailNote(itemId){
+  const content = document.getElementById("detailNoteContent").value.trim();
+  if(!content) return alert("Not gerekli.");
+  const date = document.getElementById("detailNoteDate").value || today();
+  const tag = document.getElementById("detailNoteTag").value || "daily";
+  createNoteAndMaybeTodo(itemId, date, content, tag);
+  save();
+}
+function createNoteAndMaybeTodo(itemId, date, content, tag){
+  state.notes.unshift({id:uid("note"),order:0,itemId,date,content,tag});
+  state.notes.forEach((x,idx)=>x.order=idx+1);
+  if(date > today()){
+    state.todos.unshift({
+      id:uid("todo"),
+      order:0,
+      itemId,
+      title:"İleri tarihli not",
+      description:content,
+      date,
+      status:"To-do",
+      priority:"Medium"
+    });
+    state.todos.forEach((x,idx)=>x.order=idx+1);
+  }
+}
+function addTodo(){
+  const itemId=document.getElementById("todoItem").value, title=document.getElementById("todoTitle").value.trim(); if(!title) return alert("Başlık gerekli.");
+  state.todos.unshift({id:uid("todo"),order:0,itemId,title,description:document.getElementById("todoDesc").value,date:document.getElementById("todoDate").value||today(),status:"To-do",priority:document.getElementById("todoPriority").value});
+  state.todos.forEach((x,idx)=>x.order=idx+1);
+  document.getElementById("todoTitle").value=""; document.getElementById("todoDesc").value=""; save();
+}
+function toggleTodo(id){
+  const t=state.todos.find(x=>x.id===id); if(!t)return;
+  t.status = t.status==="Done" ? "To-do" : "Done";
+  if(t.status==="Done"){
+    const existing=state.notes.find(n=>n.itemId===t.itemId&&n.date===today());
+    const txt=`Completed to-do: ${t.title}${t.description?" — "+t.description:""}`;
+    if(existing){ existing.content += "\n" + txt; } else { state.notes.unshift({id:uid("note"),order:0,itemId:t.itemId,date:today(),content:txt,tag:"auto-created"}); state.notes.forEach((x,idx)=>x.order=idx+1); }
+  }
+  save();
+}
+function moveRecord(collection,id,dir){
+  const arr = ordered(state[collection]);
+  const idx = arr.findIndex(x=>x.id===id), target=idx+dir;
+  if(idx<0 || target<0 || target>=arr.length) return;
+  const temp = arr[idx].order; arr[idx].order = arr[target].order; arr[target].order = temp;
+  state[collection]=arr; save();
+}
+function deleteItem(id){ if(!confirm("Bu iş ve bağlı notlar/yapılacaklar silinsin mi?")) return; state.items=state.items.filter(i=>i.id!==id); state.notes=state.notes.filter(n=>n.itemId!==id); state.todos=state.todos.filter(t=>t.itemId!==id); selectedItemId=state.items[0]?.id; save(); }
+function deleteNote(id){ if(!confirm("Bu not silinsin mi?")) return; state.notes=state.notes.filter(n=>n.id!==id); save(); }
+function deleteTodo(id){ if(!confirm("Bu yapılacak silinsin mi?")) return; state.todos=state.todos.filter(t=>t.id!==id); save(); }
+
+function openEdit(type,id){
+  const dialog=document.getElementById("editDialog"), form=document.getElementById("editForm"), title=document.getElementById("editTitle");
+  title.textContent = type==="item" ? "İş / Konu Düzenle" : type==="note" ? "Not Düzenle" : "Yapılacak Düzenle";
+  if(type==="item"){
+    const i=itemById(id);
+    form.innerHTML=`
+      ${field("Başlık","edit_title",i.title)}
+      <div class="grid2 mt">${selectField("Tip","edit_type",["Jira item","General topic"],i.type)}${field("Jira ID","edit_jiraId",i.jiraId||"")}</div>
+      ${field("Jira Link","edit_jiraLink",i.jiraLink||"")}
+      <div class="grid2 mt">${field("Proje","edit_project",i.project||"")}${field("Grup","edit_group",i.group||"")}</div>
+      ${textareaField("Açıklama","edit_description",i.description||"")}
+      <div class="grid3 mt">${field("Durum","edit_status",i.status||"")}${selectField("Öncelik","edit_priority",["High","Medium","Low"],i.priority)}${field("Renk","edit_color",i.color||"#2563eb","color")}</div>
+      <button class="btn primary mt" style="width:100%" onclick="saveEditItem('${id}')">Kaydet</button>`;
+  } else if(type==="note"){
+    const n=state.notes.find(x=>x.id===id);
+    form.innerHTML=`
+      ${selectItemField("Bağlı İş / Konu","edit_itemId",n.itemId)}
+      ${field("Tarih","edit_date",n.date,"date")}
+      ${textareaField("Not İçeriği","edit_content",n.content||"")}
+      ${field("Etiket","edit_tag",n.tag||"")}
+      <button class="btn primary mt" style="width:100%" onclick="saveEditNote('${id}')">Kaydet</button>`;
+  } else {
+    const t=state.todos.find(x=>x.id===id);
+    form.innerHTML=`
+      ${selectItemField("Bağlı İş / Konu","edit_itemId",t.itemId)}
+      ${field("Başlık","edit_title",t.title||"")}
+      ${textareaField("Açıklama","edit_description",t.description||"")}
+      <div class="grid3 mt">${field("Tarih","edit_date",t.date,"date")}${selectField("Öncelik","edit_priority",["High","Medium","Low"],t.priority)}${selectField("Durum","edit_status",["To-do","Done"],t.status)}</div>
+      <button class="btn primary mt" style="width:100%" onclick="saveEditTodo('${id}')">Kaydet</button>`;
+  }
+  dialog.showModal();
+}
+function closeEdit(){ document.getElementById("editDialog").close(); }
+function saveEditItem(id){
+  const i=itemById(id);
+  const jiraId=val("edit_jiraId");
+  Object.assign(i,{title:val("edit_title"),type:val("edit_type"),jiraId,jiraLink:val("edit_jiraLink") || (jiraId?jiraLink(jiraId):""),project:val("edit_project"),group:val("edit_group")||"General",description:val("edit_description"),status:val("edit_status"),priority:val("edit_priority"),color:val("edit_color")});
+  closeEdit(); save();
+}
+function saveEditNote(id){
+  const n=state.notes.find(x=>x.id===id);
+  Object.assign(n,{itemId:val("edit_itemId"),date:val("edit_date"),content:val("edit_content"),tag:val("edit_tag")});
+  closeEdit(); save();
+}
+function saveEditTodo(id){
+  const t=state.todos.find(x=>x.id===id);
+  Object.assign(t,{itemId:val("edit_itemId"),title:val("edit_title"),description:val("edit_description"),date:val("edit_date"),priority:val("edit_priority"),status:val("edit_status")});
+  closeEdit(); save();
+}
+function val(id){ return document.getElementById(id).value; }
+function field(label,id,value,type="text"){ return `<label class="mt"><span class="meta">${label}</span><input id="${id}" type="${type}" value="${escapeAttr(value)}"></label>`; }
+function textareaField(label,id,value){ return `<label class="mt"><span class="meta">${label}</span><textarea id="${id}">${escapeHtml(value)}</textarea></label>`; }
+function selectField(label,id,options,value){ return `<label><span class="meta">${label}</span><select id="${id}">${options.map(o=>`<option ${o===value?"selected":""}>${escapeHtml(o)}</option>`).join("")}</select></label>`; }
+function selectItemField(label,id,value){ return `<label class="mt"><span class="meta">${label}</span><select id="${id}">${ordered(state.items).map(i=>`<option value="${i.id}" ${i.id===value?"selected":""}>${escapeHtml(i.title)}</option>`).join("")}</select></label>`; }
+
+function startOfWeek(ds){ const d=new Date(ds+"T12:00:00"); const day=d.getDay(); d.setDate(d.getDate()+(day===0?-6:1-day)); return d; }
+function moveWeek(n){ const d=new Date(weekAnchor+"T12:00:00"); d.setDate(d.getDate()+n); weekAnchor=d.toISOString().slice(0,10); render(); }
+function goToday(){ weekAnchor=today(); render(); }
+async function copyPlainSummary(){ 
+  const text = plainSummaryText();
+  const html = richSummaryClipboardHtml();
+  try {
+    if (navigator.clipboard && window.ClipboardItem) {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": new Blob([html], { type: "text/html" }),
+          "text/plain": new Blob([text], { type: "text/plain" })
+        })
+      ]);
+    } else {
+      const rich = document.getElementById("richSummary");
+      const range = document.createRange();
+      range.selectNodeContents(rich);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand("copy");
+      selection.removeAllRanges();
+    }
+    alert("Özet kopyalandı.");
+  } catch {
+    const el = document.getElementById("plainSummary");
+    el.classList.remove("hidden");
+    el.focus();
+    el.select();
+    document.execCommand("copy");
+    el.classList.add("hidden");
+    alert("Özet kopyalandı.");
+  }
+}
+function exportJson(){ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="daily-jira-agenda-tracker.json"; a.click(); URL.revokeObjectURL(url); }
+function importJson(e){ const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ try{ state=JSON.parse(r.result); save(); }catch{ alert("Geçersiz JSON"); } }; r.readAsText(f); }
+function escapeHtml(str){ return String(str ?? "").replace(/[&<>"']/g, s=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[s])); }
+function escapeAttr(str){ return escapeHtml(str).replace(/\n/g," "); }
+render();
+</script>
+</body>
+</html>
